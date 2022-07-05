@@ -1,0 +1,26 @@
+---
+title: "Plotting Scottish castles"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Plotting Scottish castles}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = T, message=F, warning=F}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(ScottishCastles)
+```
+
+The first step is to import the different files to create the map. We have 4 disctint files: one polygon shapefile defining the border of Scotland, one klm files where all castles are stored, one excel file containing visited/closed castles and one tiff raster file with the topography of Scotland. Those files have been added to internal data so they can be called directly from the pakcage 
+
+```{r open files}
+data(visits)
+```
+

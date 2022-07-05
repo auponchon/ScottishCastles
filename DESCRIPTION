@@ -16,9 +16,13 @@ VignetteBuilder: knitr
 URL: https://github.com/auponchon/ScottishCastles
 BugReports: https://github.com/auponchon/ScottishCastles/issues
 Imports: 
+    dplyr,
     here,
     magrittr,
-    qpdf
+    qpdf,
+    raster,
+    sf,
+    stringr
 Depends: 
     R (>= 2.10)
 LazyData: true
