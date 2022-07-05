@@ -13,3 +13,5 @@ Suggests:
     knitr,
     rmarkdown
 VignetteBuilder: knitr
+URL: https://github.com/auponchon/ScottishCastles
+BugReports: https://github.com/auponchon/ScottishCastles/issues
