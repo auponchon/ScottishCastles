@@ -1,6 +1,5 @@
 ### code to prepare `Scottish_castles_locations` dataset goes here
 
-
 ####################################################################
 ## DATA 1
 # retrieve paths to klm file with castle coordinates
@@ -18,7 +17,7 @@ usethis::use_data(locations, overwrite = TRUE)
 # retrieve paths to csv file with castle visit status
 visited <- system.file(
     "extdata",
-    "visited_castles_2022-05-30.xslx",
+    "visited_castles_2022-05-30.xlsx",
     package = "ScottishCastles")
 
 Col.Names<-c("Name","City","County","Visited")
@@ -28,24 +27,6 @@ usethis::use_data(visits, overwrite = TRUE)
 
 ##########################################################
 # DATA 3
-#load topography raster for Scotland and project it
-topo <- system.file(
-    "extdata",
-    "ETOPO.tiff",
-    package = "ScottishCastles"
-)
-
-topo_proj<-projectRaster(topo,
-                         crs=CRS("+init=epsg:27700"))
-
-topo<-mask(topo_proj,reg)
-
-topo_df <-as.data.frame(as(topo, "SpatialPixelsDataFrame"))
-colnames(topo_df) <- c("value", "x", "y")
-usethis::use_data(topo_df, overwrite = TRUE)
-
-##########################################################
-# DATA 4
 #load polygon shapfile with Scotland coastline
 
 reg <- system.file(
@@ -57,3 +38,21 @@ reg<-read_sf(reg)
 
 #save the wine_data dataframe as an .rda file in WineReviews/data/
 usethis::use_data(reg, overwrite = TRUE)
+
+##########################################################
+# DATA 4
+#load topography raster for Scotland and project it
+topo <- raster::raster(system.file(
+    "extdata",
+    "ETOPO.tiff",
+    package = "ScottishCastles"
+))
+
+topo_proj<-raster::projectRaster(topo,
+                         crs=sp::CRS("+init=epsg:27700"))
+
+topo<-raster::mask(topo_proj,reg)
+
+topo_df <-as.data.frame(as(topo, "SpatialPixelsDataFrame"))
+colnames(topo_df) <- c("value", "x", "y")
+usethis::use_data(topo_df, overwrite = TRUE)
