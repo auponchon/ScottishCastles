@@ -1,0 +1,15 @@
+Package: ScottishCastles
+Title: Map of Scottish castles
+Version: 0.0.0.9000
+Authors@R: 
+    person("Aurore", "Ponchon", , "aurore.ponchon@abdn.ac.uk", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-5126-6269"))
+Description: Package which creates a map of Scottish castles that I have visited/not visited/wer closed. It has been an example for me to develop my first package.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.0
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
