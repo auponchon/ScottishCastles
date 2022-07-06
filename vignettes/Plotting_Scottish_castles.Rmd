@@ -16,11 +16,112 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 library(ScottishCastles)
+library(here)
+library(png)
+library(showtext)
+library(ggplot2)
+library(MetBrewer)
+library(ggimage)
+library(ggpubr)
+library(ggspatial)
+library(ragg)
 ```
 
-The first step is to import the different files to create the map. We have 4 disctint files: one polygon shapefile defining the border of Scotland, one klm files where all castles are stored, one excel file containing visited/closed castles and one tiff raster file with the topography of Scotland. Those files have been added to internal data so they can be called directly from the pakcage 
+The first step is to import the different files to create the map. We have 4 disctint files: one polygon shapefile defining the border of Scotland, one klm files where all castles are stored, one excel file containing visited/closed castles and one tiff raster file with the topography of Scotland. Those files have been added to internal data so they can be called directly from the package. The last art is to create a plot with all the different layers 
 
 ```{r open files}
 data(visits)
+data(locations)
+data(reg)
+data(topo_df)
+
+## ----cleaning dataframes------------------------------------------------------
+#clean the 2 dataframes with "clean_names_castles" function
+## Put first letter as upper case for all names
+# and add "castle" if not in the name
+visits_clean <- clean_names_castles(visits)
+loc_clean <- clean_names_castles(locations)
+
+#Associate visits, locations and icons
+df1=loc_clean
+df2=visits_clean
+
+img1= here("Figures","castle_dark_brown.png")
+img2= here("Figures","castle_mod_2.png")
+img3=here("Figures","castle_orange.png")
+img4=here("Figures","castle_mod_2.png")
+shapefile<-reg
+
+castles<-merge_castles(df1,df2,img1,img2,img3,img4,shapefile)
+
+# #Get coordinates of castles to place the icons on the map
+cast_df<-as.data.frame(as(castles, "Spatial"))
+
+
+## ----plotting castles, image.width=10, image.height=15,dpi=500----------------
+#load background paper
+img <- readPNG(here("Figures","Paper.png"))  #fond.png or Paper.png
+
+#Identify different fonts
+font_add_google(name = "tangerine", family = "tanguy")
+font_add_google(name = "Eagle Lake", family = "tang")
+showtext_auto()
+
+#import pictures for the legend
+notvis<-readPNG( here("Figures","castle_dark_brown.png"))
+vis<-readPNG( here("Figures","castle_mod_2.png"))
+clos<-readPNG(here("Figures","castle_orange.png")  )
+ 
+#Plot map
+mappy<-ggplot() +
+          background_image(img) +
+          geom_tile(topo_df,mapping=aes(x=x,y=y,fill=value),show.legend=F) +   #topographic layer
+          scale_fill_gradientn(colors=met.brewer("Isfahan1")) +
+          geom_sf(data=reg,col="white",show.legend=F,alpha=0.2,size=0.2) +   #coastline layer
+
+          scale_x_continuous(expand=c(0.2,0.3))+
+          scale_y_continuous(expand = c(0.3,0.3)) +
+
+          geom_sf(data=castles,mapping=aes(color=Visited),size=0.5) +  #having castle locations as points
+           scale_color_manual(name = "Castles",
+                              values = c( "Visited" = "black", "Not visited" ="#4F311C",
+                                          "Closed" = "#FE9929")) +#castle layer
+          annotation_north_arrow(location = "br", which_north = "true",
+                                 style = north_arrow_nautical,
+                                 pad_x=unit(1,"cm"),pad_y=unit(1.5,"cm"),
+                                 height=unit(2,"cm"),width=unit(2,"cm"))+
+
+          geom_image(data=cast_df,aes(x=coords.x1,y=coords.x2,
+                                      image=Image_color),size=.023,alpha=0.5) +
+          geom_text(mapping = aes(x = 200000, y = 1100000, label = "Castles of Scotland"),
+                    family = "tanguy",size=24*.pt,fontface="bold") +
+
+          labs(x="",y="",color="Castles")+
+
+          annotation_raster(vis, xmin =40000, xmax = 55000,
+                            ymin =530000, ymax = 560000, interpolate = T) +
+          annotation_raster(notvis,  xmin =40000, xmax = 55000,
+                            ymin =490000, ymax = 520000, interpolate = T) +
+          annotation_raster(clos, xmin =40000, xmax = 55000,
+                            ymin = 450000, ymax = 480000, interpolate = T) +
+
+          theme_void() +
+          theme(
+                    legend.position = c(0.18, 0.1),
+                    legend.justification = c("left", "bottom"),
+                #    legend.key.size=unit(1, "cm"),
+                    legend.spacing.y= unit(0.03, "cm"),
+                    legend.spacing.x= unit(0.03, "cm"),
+                    legend.text = element_text(family="tang",size=12*.pt),
+                    legend.title = element_text(face = "bold",family="tang",size=16*.pt) )
+
+print(mappy)
+
+ggsave(mappy, file=here("Figures","Map_of_Scotland_final.png"),dpi=500,width=10,height=15,units="cm")
+
+
+
+
+
 ```
 
