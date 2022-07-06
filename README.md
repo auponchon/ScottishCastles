@@ -4,7 +4,7 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of ScottishCastles is to plot a map of Scotland with castles identified in Google Earth.
+The goal of ScottishCastles is to plot a map of Scotland with castles identified in Google Earth. This is is my first package development
 
 ## Installation
 
