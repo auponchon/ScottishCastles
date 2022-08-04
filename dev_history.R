@@ -29,4 +29,12 @@ usethis::use_package("ggimage")
 usethis::use_package("ggpubr")
 usethis::use_package("ggspatial")
 usethis::use_package("ragg")
-
+usethis::use_testthat(3)
+usethis::use_test("clean_names_castles")
+testthat::test_file("test-clean_names_castles")
+usethis::use_test("merging_castles")
+devtools::test()
+devtools::test_coverage()
+usethis::use_package("rlang")  #when calling a variable name in a function
+usethis::use_import_from("rlang", c(".data", ".env"))
+usethis::use_package("tibble")

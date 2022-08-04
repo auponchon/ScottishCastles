@@ -17,7 +17,7 @@ merge_castles(df1, df2, img1, img2, img3, img4, shapefile)
 
 \item{img3}{Icon for closed castles}
 
-\item{img4}{Icon when using fill function in ggplot}
+\item{img4}{Icon when using fill function in ggplot (same for all factors)}
 
 \item{shapefile}{a polygon shapefile with Scotland coastline}
 }
@@ -26,4 +26,12 @@ return a clean dataframe with coordinates, names and visits of castles
 }
 \description{
 Merge castles locations, names and visits
+}
+\examples{
+data(visits)
+data(locations)
+data(reg)
+
+merge_castles(visits,locations,"im1","im2","im3","im4",reg)
+
 }

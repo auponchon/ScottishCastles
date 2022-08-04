@@ -27,6 +27,7 @@ library(ggspatial)
 library(ragg)
 ```
 
+This package aims at creating a package with data and specific functions to plot castles in Scotland according to whether they have been visited or not by me.
 The first step is to import the different files to create the map. We have 4 disctint files: one polygon shapefile defining the border of Scotland, one klm files where all castles are stored, one excel file containing visited/closed castles and one tiff raster file with the topography of Scotland. Those files have been added to internal data so they can be called directly from the package. The last art is to create a plot with all the different layers 
 
 ```{r open files}
@@ -117,7 +118,7 @@ mappy<-ggplot() +
 
 print(mappy)
 
-ggsave(mappy, file=here("Figures","Map_of_Scotland_final.png"),dpi=500,width=10,height=15,units="cm")
+#ggsave(mappy, file=here("Figures","Map_of_Scotland_final.png"),dpi=500,width=10,height=15,units="cm")
 
 
 

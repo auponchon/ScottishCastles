@@ -30,9 +30,11 @@ Imports:
     qpdf,
     ragg,
     raster,
+    rlang,
     sf,
     showtext,
     stringr,
+    tibble,
     tidyr
 Depends: 
     R (>= 2.10)
