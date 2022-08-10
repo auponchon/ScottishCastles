@@ -10,6 +10,8 @@ vignette: >
 ```{r, include = T, message=F, warning=F}
 knitr::opts_chunk$set(
   collapse = TRUE,
+  message = F,
+  warning = F,
   comment = "#>"
 )
 ```
@@ -30,7 +32,7 @@ library(ragg)
 This package aims at creating a package with data and specific functions to plot castles in Scotland according to whether they have been visited or not by me.
 The first step is to import the different files to create the map. We have 4 disctint files: one polygon shapefile defining the border of Scotland, one klm files where all castles are stored, one excel file containing visited/closed castles and one tiff raster file with the topography of Scotland. Those files have been added to internal data so they can be called directly from the package. The last art is to create a plot with all the different layers 
 
-```{r open files}
+```{r open files ,image.width=10, image.height=15,dpi=500}
 data(visits)
 data(locations)
 data(reg)
@@ -38,7 +40,7 @@ data(topo_df)
 
 ## ----cleaning dataframes------------------------------------------------------
 #clean the 2 dataframes with "clean_names_castles" function
-## Put first letter as upper case for all names
+# Put first letter as upper case for all names
 # and add "castle" if not in the name
 visits_clean <- clean_names_castles(visits)
 loc_clean <- clean_names_castles(locations)
@@ -47,7 +49,7 @@ loc_clean <- clean_names_castles(locations)
 df1=loc_clean
 df2=visits_clean
 
-img1= here("Figures","castle_dark_brown.png")
+img1= here("Figures","castle_dark_brown.png") 
 img2= here("Figures","castle_mod_2.png")
 img3=here("Figures","castle_orange.png")
 img4=here("Figures","castle_mod_2.png")
@@ -71,8 +73,9 @@ showtext_auto()
 #import pictures for the legend
 notvis<-readPNG( here("Figures","castle_dark_brown.png"))
 vis<-readPNG( here("Figures","castle_mod_2.png"))
-clos<-readPNG(here("Figures","castle_orange.png")  )
- 
+clos<-readPNG(here("Figures","castle_orange.png")  ) 
+
+
 #Plot map
 mappy<-ggplot() +
           background_image(img) +
@@ -118,7 +121,7 @@ mappy<-ggplot() +
 
 print(mappy)
 
-#ggsave(mappy, file=here("Figures","Map_of_Scotland_final.png"),dpi=500,width=10,height=15,units="cm")
+#ggsave(mappy, file=here ("Figures","Map_of_Scotland_final.png",dpi=500,width=10,height=15,units="cm")
 
 
 

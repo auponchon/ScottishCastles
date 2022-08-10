@@ -50,7 +50,7 @@
 #' @name reg
 #' @usage data(reg)
 #' @format A sf object with 35 rows and 3 variables
-"locations"
+"reg"
 
 
 #' A dataframe representing the topography of Scotland

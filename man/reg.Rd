@@ -3,7 +3,6 @@
 \docType{data}
 \name{reg}
 \alias{reg}
-\alias{locations}
 \title{Vector shapefile reprsenting the county borders in Scotland}
 \format{
 A sf object with 35 rows and 3 variables
