@@ -33,8 +33,16 @@ usethis::use_testthat(3)
 usethis::use_test("clean_names_castles")
 testthat::test_file("test-clean_names_castles")
 usethis::use_test("merging_castles")
+testthat::test_file("test-merging_castles")
 devtools::test()
 devtools::test_coverage()
 usethis::use_package("rlang")  #when calling a variable name in a function
 usethis::use_import_from("rlang", c(".data", ".env"))
 usethis::use_package("tibble")
+
+#to remove warning about no visible binding for global variables
+library(checkhelper)
+checkhelper::find_missing_tags()
+globals <- get_no_visible(quiet = TRUE)
+print_globals(globals)
+usethis::use_r("globals")

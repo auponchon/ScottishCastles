@@ -5,7 +5,7 @@
 #' @param img1 Icon for non visited castles
 #' @param img2 Icon for visited castles
 #' @param img3 Icon for closed castles
-#' @param img4 Icon when using fill function in ggplot (same for all factors)
+#' @param img4 Icon when using fill function in ggplot (same icon for all factors)
 #' @param shapefile a polygon shapefile with Scotland coastline
 #'
 #' @return return a clean dataframe with coordinates, names and visits of castles
@@ -37,10 +37,12 @@ merge_castles<-function(df1,df2,img1,img2,img3,img4,shapefile){
                                        .data$Visited=="2" ~ img3,
                                        TRUE ~ "NA"),
                Image_solo = img4) %>%
-        st_as_sf(.) %>%
-        st_transform(., crs = st_crs(shapefile)) %>%
-        mutate(Visited = revalue(.data$Visited, c( "0" = "Not visited",
+        st_as_sf() %>%
+        st_transform(.data, crs = "EPSG:27700" ) %>%
+        mutate(Visited = plyr::revalue(.data$Visited, c( "0" = "Not visited",
                                              "1" = "Visited",
                                              "2" = "Closed")))
     return(castles)
 }
+
+# use stringi::stri_escape_unicode() to find the right encoding
