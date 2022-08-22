@@ -7,7 +7,7 @@ library(stringi)
 
 klm.file <- system.file(
     "extdata",
-    "ScottishCastles_2022-05-30.kml",
+    "ScottishCastles_2022-08-22.kml",
     package = "ScottishCastles")
 
 locations<-st_read(klm.file)

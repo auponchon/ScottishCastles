@@ -16,7 +16,6 @@ You can install the development version of ScottishCastles from my github accoun
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
 
 ``` r
 library(ScottishCastles)
