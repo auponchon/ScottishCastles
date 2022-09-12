@@ -121,7 +121,7 @@ mappy<-ggplot() +
 
 print(mappy)
 
-#ggsave(mappy, file=here ("Figures","Map_of_Scotland_final.png",dpi=500,width=10,height=15,units="cm")
+ggsave(mappy, file=here ("Figures","Map_of_Scotland_final2.png"),dpi=500,width=10,height=15,units="cm")
 
 
 

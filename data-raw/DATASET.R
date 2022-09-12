@@ -4,10 +4,12 @@
 # retrieve paths to klm file with castle coordinates
 library(stringr)
 library(stringi)
+library(readxl)
+library(tools)
 
 klm.file <- system.file(
     "extdata",
-    "ScottishCastles_2022-08-22.kml",
+    "ScottishCastles_2022-09-12.kml",
     package = "ScottishCastles")
 
 locations<-st_read(klm.file)
@@ -28,7 +30,7 @@ usethis::use_data(visits, overwrite = TRUE)
 
 ##########################################################
 # DATA 3
-#load polygon shapfile with Scotland coastline
+#load polygon shapefile with Scotland coastline
 
 reg <- system.file(
     "extdata",
@@ -64,7 +66,7 @@ usethis::use_data(topo_df, overwrite = TRUE)
 
 
 resaveRdaFiles("data/locations.rda",compress="xz")
-resaveRdaFiles("data/reg.rda",compress=xz")
+resaveRdaFiles("data/reg.rda",compress="xz")
 resaveRdaFiles("data/topo_df.rda",compress="xz")
 resaveRdaFiles("data/visits.rda",compress="xz")
 
